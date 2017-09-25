@@ -5,7 +5,10 @@ This interface can change at any time.
 */
 package registry
 
+import "sync"
+
 var registry []*Entry = make([]*Entry, 0)
+var mutex sync.Mutex
 
 type Entry struct {
 	active bool
@@ -32,6 +35,9 @@ func (self Entry) Source() string {
 }
 
 func Apply(callback func(Entry)) {
+
+	// TODO try catch...
+
 	for _, entry := range registry {
 		if !entry.active {
 			continue
@@ -40,8 +46,20 @@ func Apply(callback func(Entry)) {
 	}
 }
 
+// Lock thread safety
+func Lock() {
+	mutex.Lock()
+}
+
+// Unlock thread safety
+func UnLock() {
+	mutex.Unlock()
+}
+
 func Register(source func() string) *Entry {
+	Lock()
 	entry := newEntry(source)
 	registry = append(registry, entry)
+	UnLock()
 	return entry
 }

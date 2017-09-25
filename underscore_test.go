@@ -3,8 +3,8 @@ package otto
 import (
 	"testing"
 
-	"github.com/robertkrimen/otto/terst"
-	"github.com/robertkrimen/otto/underscore"
+	"github.com/jerrytaffy/otto/terst"
+	"github.com/jerrytaffy/otto/underscore"
 )
 
 func init() {
@@ -63,7 +63,7 @@ func (self *_tester) underscore() {
         function module() {
             /* Nothing happens. */
         }
-    
+
         function equals(a, b, emit) {
             assert(a == b, emit + ", <" + a + "> != <" + b + ">");
         }
@@ -87,13 +87,13 @@ func (self *_tester) underscore() {
                 emit = want;
                 want = null;
             }
-            
+
             try {
                 fn();
             } catch(tmp) {
                 have = tmp;
             }
-            
+
             if (have) {
                 if (!want) {
                     _ok = true;
@@ -108,7 +108,7 @@ func (self *_tester) underscore() {
                     _ok = true;
                 }
             }
-            
+
             ok(_ok, emit);
         }
 
